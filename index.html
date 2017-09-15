@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ruby Fundamentals</title>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body {font-family: 'Droid Serif';}
+      h1, h2, h3 {font-family: 'Yanone Kaffeesatz';font-weight: 400;margin-bottom: 0;}
+      .remark-slide-content h1 { font-size: 3em; }
+      .remark-slide-content h2 { font-size: 2em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .footnote {position: absolute;bottom: 3em;}
+      .image-medium img {width:250px;}
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {color: rgb(249, 38, 114);text-decoration: none;}
+      code {background: #e7e8e2;border-radius: 5px;}
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {float: left;width: 47%;}
+      .pull-right {float: right;width: 47%;}
+      .pull-right ~ p {clear: both;}
+      #slideshow .slide .content code {font-size: 0.8em;}
+      #slideshow .slide .content pre code {font-size: 0.9em;padding: 15px;}
+      .inverse {background: #272822;color: #777872;text-shadow: 0 0 20px #333;}
+      .inverse h1, .inverse h2 {color: #f3f3f3;line-height: 0.8em;}
+      #slide-inverse .footnote {bottom: 12px;left: 20px;}
+      #slide-how .slides {font-size: 0.9em;position: absolute;top:  151px;right: 140px;}
+      #slide-how .slides h3 {margin-top: 0.2em;}
+      #slide-how .slides .first, #slide-how .slides .second {padding: 1px 20px;height: 90px;width: 120px;-moz-box-shadow: 0 0 10px #777;-webkit-box-shadow: 0 0 10px #777;box-shadow: 0 0 10px #777;}
+      #slide-how .slides .first {background: #fff;position: absolute;top: 20%;left: 20%;z-index: 1;}
+      #slide-how .slides .second {position: relative;background: #fff;z-index: 0;}
+      .left-column {color: #777;width: 20%;height: 92%;float: left;}
+      .left-column h2:last-of-type, .left-column h3:last-child {color: #000;}
+      .right-column {width: 75%;float: right;padding-top: 1em;}
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+#Testing en Ruby
+.footnote[Percheron Talks &#8212; 15 Agosto 2017]
+---
+layout: false
+.left-column[
+# Agenda
+]
+.right-column[
+- Pruebas de unidad
+
+- Test-Driven Development (TDD)
+
+- BDD (Behavior-Driven Development)
+
+]
+
+---
+layout: false
+class: center, middle
+# Pruebas de Unidad
+---
+layout: false
+class: center, middle
+
+ .center.image-medium[![](http://www.beilers.com/wp-content/uploads/2010/03/moz-screenshot-2.png)]
+
+&bull; Una prueba de unidad pretende probar cada funciòn en un archivo de programa simple (una clase en terminologìa de objetos).
+
+&bull; La prueba de unidad ayuda a que el mòdulo se haga independiente.
+
+
+&bull; No requiere de mucho còdigo para prepararla.
+
+&bull; Prueba sólo un método. Aunque no siempre es necesario hacer "una prueba por método
+
+
+&bull; Verifica los resultados con aserciones.
+
+&bull; Deja los datos de la misma manera en que los encontró.
+
+&bull; Cobertura  (rubycoverage)
+???
+Esto quiere decir que un mòdulo que tiene una prueba de unidad se puede probar independientemente del resto del sistema. Una vez que un gran porcentaje de su programa cuente con pruebas de unidad,
+
+???
+ sí es importante asegurar que cubrimos toda la clase. Muchas veces se requiere más de un método de prueba por cada método en la clase, para poder probar diferentes datos y casos extremos (por ejemplo, ¿qué pasa cuendo el usuario no existe?).
+
+???
+De preferencia se debe de checar sólo un resultado. Se pueden checar varias partes del mismo resultado, pero diferentes condiciones deben probarse en un método separado.
+
+???
+Cuando la prueba comienza, los datos se preparan si es necesario, pero cuando la prueba termina, es importante que el sistema borre los datos después de la verificación. Es por esto que muchas librerías de pruebas unitarias tienen métodos llamados setup() y teardown()
+???
+Note que las pruebas de unidad no sustituyen a las pruebas funcionales
+
+
+???
+ Algo importante
+Las pruebas de unidad influencían el diseño (para bien). Esto quiere decir que el aplicar pruebas de unidad a un sistema previamente escrito será difícil. Cuando usted se decida a añadir pruebas de unidad a un sistema existente, asegúrese de escojer sus batallas y hacer pruebas de regresión del sistema. Si su sistema es mediano o grande, es conveniente planear sus pruebas y aplicar los cambios necesarios a traves de varias versiones futuras. No lo intente todo al mismo tiempo.
+
+Otro concepto relacionado a las pruebas de unidad es el de cobertura. ¿Cómo sabemos cuantas líneas del programa están siendo probadas (y más importante, las que no se probaron)? Una vez que usted tiene pruebas de unidad, probablemente le interesará tener un reporte de las líneas que no se han probado. Una utilería gratuita para proporcionar estos reportes en ruby se llama, apropriadamente, rubycoverage.
+
+
+En ruby on rails, y en todos los lenguajes interpretados en uso hoy día, la idea de las pruebas de unidad es central e importantísima. Como casi todos los errores en un programa interpretado sólo ocurren cuando el programa corre (porque no hay etapa de compilación), en esta clase de lenguajes es esencial escribir las pruebas de unidad al mismo tiempo que el código y asegurar una cobertura adecuada.
+
+---
+layout: false
+class: center, middle
+# Como hacer una buena prueba ?
+
+&bull; primero escribimos una prueba inicial que nos ayudaría a determinar que el requerimiento funciona correctamente.
+
+&bull; Segundo Escribir la implementacion.
+
+&bull; Revisar casos o excepciones.
+???
+1 en su camino feliz, o sea su camino más sencillo. Obviamente, la prueba debe fallar porque todavía no hay código de verdad.
+
+2 Ahora que la prueba falla, podemos comenzar a escribir la implementación para que la prueba funcione, de la manera más sencilla como sea posible.
+
+3 Por ejemplo, si escribimos un requerimiento que dice que los usuarios pueden subscribirse a nuestro sistema ellos mismos, y que el sistema les enviará un correo electrónico cuando se suscriban, ¿qué pasa si el usuario es menor de edad? ¿Qué pasa si el usuario escribe un correo electrónico no válido? La idea es crear suficientes pruebas para los casos diferentes típicos.
+
+---
+class: center, middle
+# Librerias
+
+&bull;  Test::Unit
+
+ .center.image-medium[![](https://image.slidesharecdn.com/bdd-style-unit-testing-110717005914-phpapp02/95/bdd-style-unit-testing-27-728.jpg?cb=1310864588)]
+???
+Ruby on Rails utiliza la librería Test::Unit como estándar para crear pruebas de unidad. Cuando usted utiliza los generadores de Rails para crear cualquier módulo, ya sea modelos o controladores,  rails automáticamente crea una prueba de unidad para dicho controlador o modelo en el directorio test, incluyendo una que otra prueba básica. El diseño MVC de Rails hace más fácil escribir pruebas de unidad. Cuando usted extienda el programa sólo tiene que mantener las pruebas.
+
+Además, el comando "rake" en una aplicación de rails ejecuta las pruebas. De esta manera usted puede añadir las pruebas de unidad y ejecutarlas con un sólo comando.
+
+---
+class: center, middle
+# Test-Driven Development (TDD)
+
+---
+class: center, middle
+.center.image-medium[![](https://cdn-images-1.medium.com/max/800/1*ULNO-BjF1gvevA79XZXunw.jpeg)]
+
+
+
+*" Escribir tests antes que el código? cómo pruebas algo que aun no has codeado? (ノ ಥ ウಥ )ノ "*
+
+
+&bull; El sistema tiene que ser lo suficientemente flexible
+
+&bull; (Test First Development) y Refactorización (Refactoring).
+
+&bull; Requisito, Prueba, Verificar el fallo, implementacion , verificar que el conjunto funcione bien.
+
+&bull;  rspec, capybara, cucumber.
+???
+Que no es nada más que, primero hacer los tests y correrlos esperando que estos fallen (RED), escribir el código y volver a correr los tests esperando que estos pasen (GREEN) y finalmente refactorizar el código.
+
+ involucra otras dos prácticas: Escribir las pruebas primero (Test First Development) y Refactorización (Refactoring).
+
+1 Cada prueba será suficientemente pequeña como para que permita determinar unívocamente si el código probado pasa o no la verificación que ésta le impone.
+
+(Ventaja)  Permite que un programador se centre en la tarea actual y la primera meta es, a menudo, hacer que la prueba pase.
+
+(Ventaja) Cuando se usa correctamente se asegura que todas las partes de el codigo esten acompanadas de una prueba
+
+(Limitacion) acer pruebas de código que trabaja con base de datos es complejo porque requiere poner en la base de datos unos datos conocidos antes de hacer las pruebas y verificar que el contenido de la base de datos es el esperado después de la prueba. Todo esto hace que la prueba sea costosa de codificar, aparte de tener disponible una base de datos que se pueda modificar libremente.
+---
+class: center, middle
+# Behavior-Driven Development  (BDD)
+---
+class: center, middle
+.center.image-medium[![](https://cdn-images-1.medium.com/max/1600/1*3YramDu6HOAyz8OyDm9D0w.png)]
+
+&bull; Desarrollo guiado por comportamientos.
+
+&bull; Nuevo Enfoque.
+&bull;  cercano al lenguaje natural del ser humano.
+
+&bull; BDD sigue los mismos pasos de TDD.
+&bull; Porque testear algo por defecto.
+
+???
+es un nuevo enfoque al TDD que nació años atrás para desarrollar tests basados los ‘features’ de nuestra aplicación.
+
+1 Algunos dicen que BDD reemplaza a TDD, otros que BDD es lo mismo que TDD otros que BDD es algo completamente diferente a TDD
+
+2 los tests deben ser lo mas cercano al lenguaje natural del ser humano; pondré un ejemplo mas adelante para explicar a que me refiero con esto.
+
+entro de Ruby on Rails suele usar tests unitarios para los modelos y tests funcionales para los controladores,
+
+3 Otro Enfoque Prueba lo que ves. La idea de BDD es testear cosas que tu ves en la aplicación, testear los resultados finales luego de realizar ciertas acciones, probar específicamente que la aplicación hace lo que debe hacer y no engañarte con simples tests unitarios, que como lo dije anteriormente,
+
+sin embargo muchas veces se cae en el error de testear algo demasiado obvio o peor aún, testear funcionalidades que por defecto hace el sistema.
+ 4 Me refiero a que, un controlador de por si ya hace render de una vista, por ejemplo dentro de un PostsController una acción INDEX hace render de la vista INDEX, una acción SHOW hace render de la vista SHOW, es decir Rails ya nos asegura que la acción hará un render de su respectiva vista a menos que nosotros especifiquemos otra cosa, pero si no hacemos ninguna modificación en el render de la vista… Por qué testearlo?
+
+---
+class: center, middle
+# Ejemplo
+---
+class: center,middle
+
+Tengo mi PostsController con las acciones INDEX y SHOW, lo que haría en TDD normalmente seria:
+
+```ruby
+# INDEX action
+  it 'show the correct view' do
+    expect(response).to render_template ‘index’
+  end
+# SHOW action
+  it 'show the correct view' do
+    expect(response).to render_template ‘show’
+  end
+```
+
+???
+y con los dos specs, cada uno en su respectivo método, seríamos felices.
+
+Pero con BDD nosotros no testeamos que una acción muestre la vista que le corresponde, nosotros deberíamos testear la parte final, lo que realmente queremos que haga la aplicación, déjeme explicarle esto con un feature spec usando RSpec y Cabybara para nuestra acción SHOW:
+---
+class: center,middlef
+Con BDD seria :
+
+
+```ruby
+1 feature 'Mostrar el reporte seleccionado ' do
+2  scenario 'el usuario quiere ver el reporte seleccionado' do
+3    visit posts_path
+4    click_link 'Ver reporte'
+5    expect(page).to have_content 'Primer reporte' # Titulo del post mostrado en la web app
+6    expect(page).to have_content 'este es el contenido de el primer reporte' # body del post
+7  end
+8 end
+```
+Analizemos las lineas ...
+
+usando RSpec y Capybara
+???
+
+Expliquemos un poco el código:
+línea 3: el usuario visita la url de todos los reportes.
+línea 4: el usuario hace click en el link del primer reporte que tiene por nombre ‘primer reporte’.
+línea 5: le indicamos a nuestro test que la página debería tener como texto el titulo del primer post: ‘este es mi primer reporte’, que bien podría ser un h1, h2 o incluso un p (parrafo).
+linea 6: le indicamos a nuestro tests que la página también debería tener el texto del body del post, que en este caso es: ‘Welcome to my first…’.
+
+
+Lo que hacemos arriba es testear que todos los datos del post se muestren cuando alguien ingrese a la url respectiva, esto lo logramos gracias a Capybara, que nos permite navegar por la aplicación vía interfaces externas-[que para nuestro caso es una web]- en otras palabras: podemos simular el real comportamiento que un usuario tendría con nuestra aplicación.
+Lo primero que notamos es que ya no necesitamos testear que se haga el render de la vista correcta, ya que nuestro feature test prueba eso y mucho más, prueba que:
+Se muestren las url de forma correcta de mi primer post.
+La url realmente funciona.
+La url realmente me redirige al post que quiero.
+La página a la que me redirige luego de hacer click en el link del primer post realmente muestra el titulo y cuerpo de este.
+Lo ves? tenemos un test mucho mas poderoso!, que por decirlo así, tiene tests embebidos dentro de él.
+Analicemos un poco mas el feature test que tenemos.
+---
+class: center, middle
+layout: false
+# ¿Preguntas? ¿Dudas?
+---
+
+name: last-page
+template: inverse
+
+# ¡ Gracias !
+
+patrocinado por Percheron Talks.
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="https://remarkjs.com/remark.language.js"></script>
+    <script>
+      var slideshow = remark.create({
+          highlightStyle: 'monokai',
+          highlightLanguage: 'ruby',
+          highlightLines: true,
+          ratio: '16:9'
+        }) ;
+    </script>
+  </body>
+</html>
